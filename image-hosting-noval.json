@@ -1,0 +1,20 @@
+{
+  "serviceAccount": {
+    "type": "service_account",
+    "project_id": "image-hosting-noval",
+    "private_key_id": "402fc88e59f0086bc15a7a1b8c76c4497950aa06",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCB5ryT2EiD8QPO\nPpFzOHkmJJ7+nf14/7z3Nx+5eyvSa6ttej7wH8BoduFqc+bfR7XhxI5U6ADz3QT1\ng6kZhhHJ/g7RbnKHhxiqrdSH01sK0s66U6C7/ZX5MsvCvDvD9jROdyPD4w/v2SGF\n9nGQjiv/PBSnb9XuNRP9UnUcbKtk93C780D1ZFyuzqVu6krDm5z13uwF3bOZ9g32\niJK/Qhi/F3J8tJdnUytP0yxDirMCkfvQKJKCto5T4NLFDJGWP0eKwKYUmXxE9RFF\ni2sLszUdVR83I5q+UEH7xr4TeyfUpDmTKs/BXkP/d7mKoI+Omm7tsB/bt+new3i1\ntxlzyf8pAgMBAAECggEADLkf0U9G0v2BROsl7eYjH5RIqmGpGPfbd09D4TPqN+Lp\n2IA3t+c0PkcejwGpJEduzh0lX7WVmk0UlkN+BYz3IxSqOOMbfqDBzr3V6jPOYAID\n04YrYR5WWSEbighLxkbQGrtamm4b+n8G5Isd1m3Ga2pkD35JstoqCg7Qf6c5Jlte\nS1c28E6nXHB3LKtC6PrN1DYkiK72q39oTsCHmQGihiWUJfQB/nGrHxk/yHkOucGH\n0DAJG/jJ5GjWwUXG3/McV3rAQeZsazMoC4UtEqxYVMYmYamtHcCX+qMjng+DQEHk\n7M/dZzBVg6sUKlUREJJm60v6ip74r+MGKA+++Aw+vQKBgQC2gWR4Li9Zmq2YBRVV\nl1rZmP9mtUcCAgFmBFhrr3PLx3H3Sy79KYYykaCRaJHQL44CyxlbL0ZGxZuZJfFw\nPwQASffdKwN0ac9jEcpg8XeEEI6HboMsgtb1qjmwPrkRoOCPppbw48BwkZ9eIh9h\nrcZ2vb29gfPIOrIekD6j2cOaDwKBgQC2NlmSMwX3B9o88miyKYM2qO2wWp504Bky\nAoGTrYdAGCVUcnuYJkizoy7cWh8BQum/cSUE/rvwucCITa+5JBqais0F01hIACyc\nMEaKFqrC/eutNSRoWkYkB2gIo3WU1eCSFi645XGb6e7bXzPz3WthXflo6D4d8AON\nJspf/nprRwKBgA2yDA4QuTDqMJi12PIBV6n4l0Hn3JpD+ELllJUQJ4plPyIlnDMX\nSKDG2NvQkxCiYO/IufBjzcxFy/VkKYgY0n4LDvSj47B6uDtg/GTl+egJLgjvvBw8\n/VCWI5ocOtsdzXw6Lh2JmclYxDLWMLCtz7TdbD2qYNbnwLIWdPzqvIj1AoGAENqq\nIlnR3W2+hBCwGnq4hl/NzJg1O/5WlkehELXmYslY+py0TfiMlQEtHni/kXBNCsY+\ndF3TqIqmAnWdIXTzeQQJvtYzvkU12ySkAbXjCbJPEHBv868V+dMtjk8AW0oFQb4H\niFbA0Xkr/OKrfY0nl5QHs+p3hHFlArNp2MNDM5UCgYAN/9widPDfUp4ECgztAJdk\nZrQOVhlJ7UCaT6IRj0uq1RlhBp+6ZHQ1WiqTjsqSbni5ZJcNtrKbZ2+G87ZXPmJP\np2NYKOxb2QzGPD/QDVZ/OtU6nGkJr+64QQCPw2H8IFt985JEgjP0xTEsjstHNUP/\nJSxcUiO5GqwRH0uxg1pRIA==\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-z5mip@image-hosting-noval.iam.gserviceaccount.com",
+    "client_id": "115616287586387177927",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-z5mip%40image-hosting-noval.iam.gserviceaccount.com"
+  },
+  "apiKey": "AIzaSyAe9Kh0WkqIh2ZQ7_RHipbtiIWoPhgcg3g",
+  "authDomain": "image-hosting-noval.firebaseapp.com",
+  "databaseURL": "https://image-hosting-noval.firebaseio.com",
+  "projectId": "image-hosting-noval",
+  "storageBucket": "image-hosting-noval.appspot.com",
+  "messagingSenderId": "181564707861"
+}
