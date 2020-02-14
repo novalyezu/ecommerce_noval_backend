@@ -52,8 +52,22 @@ const isAdminEcommerce = (req, res, next) => {
   next();
 };
 
+const isMerchant = (req, res, next) => {
+  let role = req.decode.role;
+
+  if (role !== "merchant") {
+    return res.status(403).json({
+      status: "fail",
+      message: "Access denied!",
+      name: "AccessDenied"
+    });
+  }
+  next();
+};
+
 module.exports = {
   checkToken: checkToken,
   verifyToken: verifyToken,
-  isAdminEcommerce: isAdminEcommerce
+  isAdminEcommerce: isAdminEcommerce,
+  isMerchant: isMerchant
 };
