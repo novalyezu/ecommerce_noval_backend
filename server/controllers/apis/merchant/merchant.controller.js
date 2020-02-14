@@ -82,8 +82,8 @@ router.put(
       );
 
       return res
-        .status(201)
-        .json({ message: "merchant updated!", data: merchant });
+        .status(200)
+        .json({ status: "ok", message: "merchant updated!", data: merchant });
     } catch (error) {
       next(error);
     }
@@ -115,7 +115,11 @@ router.put(
 
       return res
         .status(200)
-        .json({ message: "merchant updated!", data: merchantUpdated });
+        .json({
+          status: "ok",
+          message: "merchant updated!",
+          data: merchantUpdated
+        });
     } catch (error) {
       next(error);
     }
