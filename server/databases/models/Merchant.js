@@ -3,6 +3,7 @@
 const Sequelize = require("sequelize");
 const Model = Sequelize.Model;
 const sequelize = require("../connection");
+const ShippingService = require("./ShippingService");
 
 class Merchant extends Model {}
 Merchant.init(
@@ -37,5 +38,18 @@ Merchant.init(
     modelName: "merchant"
   }
 );
+
+Merchant.belongsToMany(ShippingService, {
+  as: "shipping_service",
+  through: "merchant_shipping_service",
+  foreignKey: "merchant_id",
+  otherKey: "shipping_service_id"
+});
+ShippingService.belongsToMany(Merchant, {
+  as: "shipping_service_merchants",
+  through: "merchant_shipping_service",
+  foreignKey: "shipping_service_id",
+  otherKey: "merchant_id"
+});
 
 module.exports = Merchant;

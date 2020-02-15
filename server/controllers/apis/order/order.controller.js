@@ -7,6 +7,22 @@ const {
 } = require("../../../middlewares/auth.middleware");
 let router = require("express").Router();
 
+router.get(
+  "/detail/by_user/:user_id",
+  checkToken,
+  verifyToken,
+  async (req, res, next) => {
+    let user_id = req.params.user_id;
+    try {
+      let detailOrder = await orderService.getDetailOrderUser(user_id);
+
+      return res.status(200).json({ status: "ok", data: detailOrder });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.post("/add_item", checkToken, verifyToken, async (req, res, next) => {
   let orderData = {
     total_item: req.body.total_item,
@@ -73,6 +89,52 @@ router.delete(
       );
 
       return res.status(200).json({ status: "ok" });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post("/payment", checkToken, verifyToken, async (req, res, next) => {
+  let payment_method_id = req.body.payment_method_id;
+  let user_id = req.body.user_id;
+  let order_data = req.body.order_data;
+
+  try {
+    let invoice = await orderService.addInvoice(payment_method_id, user_id);
+    let bill_total = 0;
+    for (let i = 0; i < order_data.length; i++) {
+      for (let j = 0; j < order_data[i].order_item.length; j++) {
+        bill_total += order_data[i].order_item[j].sub_total;
+      }
+      await orderService.updateOrder(
+        invoice.id_invoice,
+        order_data[i].shipping_service.id_shipping_service,
+        order_data[i].id_order
+      );
+      bill_total += order_data[i].shipping_service.price;
+    }
+    let invoiceUpdated = await orderService.updateInvoice(
+      bill_total,
+      invoice.id_invoice
+    );
+
+    return res.status(200).json({ status: "ok", data: invoiceUpdated });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get(
+  "/payment/:invoice_id/check",
+  checkToken,
+  verifyToken,
+  async (req, res, next) => {
+    let invoice_id = req.params.invoice_id;
+    try {
+      let invoice = await orderService.checkPayment(invoice_id);
+
+      return res.status(200).json({ status: "ok", data: invoice });
     } catch (error) {
       next(error);
     }

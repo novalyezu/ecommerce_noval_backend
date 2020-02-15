@@ -3,6 +3,22 @@
 const Order = require("../../../../databases/models/Order");
 const OrderItem = require("../../../../databases/models/OrderItem");
 const Invoice = require("../../../../databases/models/Invoice");
+const moment = require("moment");
+
+const getDetailOrderUser = async user_id => {
+  let order = await Order.findAll({
+    where: {
+      status: "ongoing",
+      user_id: user_id
+    },
+    include: [
+      { association: "merchant", include: ["shipping_service"] },
+      { association: "order_item", include: ["product"] }
+    ]
+  });
+
+  return order;
+};
 
 const getOrder = async order_id => {
   let order = await Order.findByPk(order_id, {
@@ -91,11 +107,79 @@ const deleteOrderItem = async order_item_id => {
   return;
 };
 
+const addInvoice = async (payment_method_id, user_id) => {
+  let invoice = await Invoice.create({
+    status: "pending",
+    bill_total: null,
+    payment_date: moment().format(),
+    payment_method_id: payment_method_id,
+    user_id: user_id
+  });
+
+  return invoice;
+};
+
+const updateOrder = async (invoice_id, shipping_service_id, order_id) => {
+  await Order.update(
+    {
+      status: "done",
+      shipping_service_id: shipping_service_id,
+      invoice_id: invoice_id
+    },
+    {
+      where: {
+        id_order: order_id
+      }
+    }
+  );
+
+  return;
+};
+
+const updateInvoice = async (bill_total, invoice_id) => {
+  await Invoice.update(
+    {
+      bill_total: bill_total
+    },
+    {
+      where: {
+        id_invoice: invoice_id
+      }
+    }
+  );
+
+  let invoice = await Invoice.findByPk(invoice_id);
+
+  return invoice;
+};
+
+const checkPayment = async invoice_id => {
+  await Invoice.update(
+    {
+      status: "success"
+    },
+    {
+      where: {
+        id_invoice: invoice_id
+      }
+    }
+  );
+
+  let invoice = await Invoice.findByPk(invoice_id);
+
+  return invoice;
+};
+
 module.exports = {
+  getDetailOrderUser: getDetailOrderUser,
   getOrder: getOrder,
   addOrderItem: addOrderItem,
   addOrder: addOrder,
   updateTotalItem: updateTotalItem,
   updateOrderItem: updateOrderItem,
-  deleteOrderItem: deleteOrderItem
+  deleteOrderItem: deleteOrderItem,
+  addInvoice: addInvoice,
+  updateOrder: updateOrder,
+  updateInvoice: updateInvoice,
+  checkPayment: checkPayment
 };
