@@ -10,6 +10,7 @@ const paymentMethodAdminController = require("../../../controllers/apis/payment-
 const authController = require("../../../controllers/apis/authentication/auth.controller");
 const merchantController = require("../../../controllers/apis/merchant/merchant.controller");
 const productController = require("../../../controllers/apis/product/product.controller");
+const orderController = require("../../../controllers/apis/order/order.controller");
 
 // INIT ROUTER
 let router = express.Router();
@@ -23,5 +24,6 @@ router.use("/admin/payment_methods", paymentMethodAdminController);
 router.use("/auth", authController);
 router.use("/merchants", merchantController);
 router.use("/products", productController);
+router.use("/orders", orderController);
 
 module.exports = router;
