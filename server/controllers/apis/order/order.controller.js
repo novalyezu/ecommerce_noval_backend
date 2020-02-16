@@ -70,6 +70,31 @@ router.put("/update_item", checkToken, verifyToken, async (req, res, next) => {
   }
 });
 
+router.post(
+  "/update_qty/:order_item_id",
+  checkToken,
+  verifyToken,
+  async (req, res, next) => {
+    let order_item_id = req.params.order_item_id;
+    let qty = req.body.qty;
+    let sub_total = req.body.sub_total;
+    try {
+      let order_item = await orderService.updateQty(
+        qty,
+        sub_total,
+        order_item_id
+      );
+
+      return res.status(200).json({
+        status: "ok",
+        data: { order_item_id, qty, sub_total, order_id: order_item.order_id }
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.delete(
   "/delete_item/:order_item_id",
   checkToken,
@@ -82,13 +107,34 @@ router.delete(
     };
     try {
       await orderService.deleteOrderItem(order_item_id);
-      await orderService.updateTotalItem(
+      let total_now = await orderService.updateTotalItem(
         "dec",
         orderItemData.total_item,
         orderItemData.order_id
       );
 
-      return res.status(200).json({ status: "ok" });
+      return res
+        .status(200)
+        .json({
+          status: "ok",
+          data: { order_item_id, total_now, order_id: orderItemData.order_id }
+        });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.delete(
+  "/delete_order/:order_id",
+  checkToken,
+  verifyToken,
+  async (req, res, next) => {
+    let order_id = req.params.order_id;
+    try {
+      await orderService.deleteOrder(order_id);
+
+      return res.status(200).json({ status: "ok", data: { order_id } });
     } catch (error) {
       next(error);
     }

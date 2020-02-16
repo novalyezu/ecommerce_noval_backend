@@ -10,21 +10,46 @@ const {
 } = require("../../../middlewares/auth.middleware");
 let router = require("express").Router();
 
-router.get(
-  "/by_merchant/:merchant_id",
-  checkToken,
-  verifyToken,
-  async (req, res, next) => {
-    let merchant_id = req.params.merchant_id;
-    try {
-      let products = await productService.getProducts(merchant_id);
+router.get("/", async (req, res, next) => {
+  let sort_by_harga =
+    req.query.sort_by_harga !== undefined ? req.query.sort_by_harga : "kosong";
+  let start_at =
+    req.query.start_at !== undefined ? parseInt(req.query.start_at) : 0;
+  let limit = req.query.limit !== undefined ? parseInt(req.query.limit) : 0;
+  try {
+    let products = await productService.getProducts(
+      start_at,
+      limit,
+      sort_by_harga
+    );
 
-      return res.status(200).json({ status: "ok", data: products });
-    } catch (error) {
-      next(error);
-    }
+    return res.status(200).json({ status: "ok", data: products });
+  } catch (error) {
+    next(error);
   }
-);
+});
+
+router.get("/:product_id/detail", async (req, res, next) => {
+  let product_id = req.params.product_id;
+  try {
+    let product = await productService.getProduct(product_id);
+
+    return res.status(200).json({ status: "ok", data: product });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/by_merchant/:merchant_id", async (req, res, next) => {
+  let merchant_id = req.params.merchant_id;
+  try {
+    let products = await productService.getProductsMerchant(merchant_id);
+
+    return res.status(200).json({ status: "ok", data: products });
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.post(
   "/add_new",

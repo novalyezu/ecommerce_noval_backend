@@ -22,7 +22,10 @@ const getDetailOrderUser = async user_id => {
 
 const getOrder = async order_id => {
   let order = await Order.findByPk(order_id, {
-    include: [{ association: "order_item", include: ["product"] }]
+    include: [
+      { association: "merchant", include: ["shipping_service"] },
+      { association: "order_item", include: ["product"] }
+    ]
   });
 
   return order;
@@ -52,6 +55,24 @@ const addOrderItem = async (order_id, orderData) => {
   return orderItem;
 };
 
+const updateQty = async (qty, sub_total, order_item_id) => {
+  await OrderItem.update(
+    {
+      qty: qty,
+      sub_total: sub_total
+    },
+    {
+      where: {
+        id_order_item: order_item_id
+      }
+    }
+  );
+
+  let order_item = OrderItem.findByPk(order_item_id);
+
+  return order_item;
+};
+
 const updateTotalItem = async (status, total_item, order_id) => {
   let order = await Order.findByPk(order_id);
   let total_now =
@@ -59,26 +80,18 @@ const updateTotalItem = async (status, total_item, order_id) => {
       ? order.total_item + parseInt(total_item)
       : order.total_item - parseInt(total_item);
 
-  if (total_now > 0) {
-    await Order.update(
-      {
-        total_item: total_now
-      },
-      {
-        where: {
-          id_order: order_id
-        }
-      }
-    );
-  } else {
-    await Order.destroy({
+  await Order.update(
+    {
+      total_item: total_now
+    },
+    {
       where: {
         id_order: order_id
       }
-    });
-  }
+    }
+  );
 
-  return;
+  return total_now;
 };
 
 const updateOrderItem = async orderItemData => {
@@ -101,6 +114,16 @@ const deleteOrderItem = async order_item_id => {
   await OrderItem.destroy({
     where: {
       id_order_item: order_item_id
+    }
+  });
+
+  return;
+};
+
+const deleteOrder = async order_id => {
+  await Order.destroy({
+    where: {
+      id_order: order_id
     }
   });
 
@@ -178,6 +201,8 @@ module.exports = {
   updateTotalItem: updateTotalItem,
   updateOrderItem: updateOrderItem,
   deleteOrderItem: deleteOrderItem,
+  updateQty: updateQty,
+  deleteOrder: deleteOrder,
   addInvoice: addInvoice,
   updateOrder: updateOrder,
   updateInvoice: updateInvoice,

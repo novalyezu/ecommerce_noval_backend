@@ -3,6 +3,7 @@
 const Sequelize = require("sequelize");
 const Model = Sequelize.Model;
 const sequelize = require("../connection");
+const Merchant = require("./Merchant");
 
 class Product extends Model {}
 Product.init(
@@ -40,5 +41,7 @@ Product.init(
     modelName: "product"
   }
 );
+
+Product.belongsTo(Merchant, { as: "merchant", foreignKey: "merchant_id" });
 
 module.exports = Product;

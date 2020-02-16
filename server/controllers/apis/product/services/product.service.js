@@ -7,7 +7,7 @@ const moment = require("moment");
 
 const Product = require("../../../../databases/models/Product");
 
-const getProducts = async merchant_id => {
+const getProductsMerchant = async merchant_id => {
   let products = await Product.findAll({
     where: {
       merchant_id: merchant_id,
@@ -16,6 +16,40 @@ const getProducts = async merchant_id => {
   });
 
   return products;
+};
+
+const getProducts = async (start_at, limit, sort_by_harga) => {
+  if (sort_by_harga === "kosong") {
+    let products = await Product.findAll({
+      where: {
+        is_active: true
+      },
+      offset: start_at,
+      limit: limit
+    });
+
+    return products;
+  } else {
+    let sort = sort_by_harga === "termurah" ? "ASC" : "DESC";
+    let products = await Product.findAll({
+      where: {
+        is_active: true
+      },
+      order: [["price", sort]],
+      offset: start_at,
+      limit: limit
+    });
+
+    return products;
+  }
+};
+
+const getProduct = async product_id => {
+  let product = await Product.findByPk(product_id, {
+    include: ["merchant"]
+  });
+
+  return product;
 };
 
 const addProduct = async productData => {
@@ -144,6 +178,8 @@ const deleteProduct = async product_id => {
 
 module.exports = {
   getProducts: getProducts,
+  getProduct: getProduct,
+  getProductsMerchant: getProductsMerchant,
   addProduct: addProduct,
   updateProduct: updateProduct,
   uploadImage: uploadImage,
