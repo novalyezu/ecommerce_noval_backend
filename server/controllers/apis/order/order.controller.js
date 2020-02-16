@@ -113,12 +113,10 @@ router.delete(
         orderItemData.order_id
       );
 
-      return res
-        .status(200)
-        .json({
-          status: "ok",
-          data: { order_item_id, total_now, order_id: orderItemData.order_id }
-        });
+      return res.status(200).json({
+        status: "ok",
+        data: { order_item_id, total_now, order_id: orderItemData.order_id }
+      });
     } catch (error) {
       next(error);
     }
@@ -155,10 +153,10 @@ router.post("/payment", checkToken, verifyToken, async (req, res, next) => {
       }
       await orderService.updateOrder(
         invoice.id_invoice,
-        order_data[i].shipping_service.id_shipping_service,
+        order_data[i].shipping_service_selected.id_shipping_service,
         order_data[i].id_order
       );
-      bill_total += order_data[i].shipping_service.price;
+      bill_total += order_data[i].shipping_service_selected.price;
     }
     let invoiceUpdated = await orderService.updateInvoice(
       bill_total,
