@@ -14,6 +14,16 @@ const getMerchant = async merchant_id => {
   return merchant;
 };
 
+const getMerchantByUser = async user_id => {
+  let merchant = await Merchant.findOne({
+    where: {
+      user_id: user_id
+    }
+  });
+
+  return merchant;
+};
+
 const addMerchant = async merchantData => {
   let merchant = await Merchant.create({
     merchant_name: merchantData.merchant_name,
@@ -134,6 +144,7 @@ const deleteImage = async merchant_id => {
 
 module.exports = {
   getMerchant: getMerchant,
+  getMerchantByUser: getMerchantByUser,
   addMerchant: addMerchant,
   updateMerchant: updateMerchant,
   uploadImage: uploadImage,

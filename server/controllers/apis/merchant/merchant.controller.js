@@ -26,6 +26,22 @@ router.get(
   }
 );
 
+router.get(
+  "/:user_id/owner",
+  checkToken,
+  verifyToken,
+  async (req, res, next) => {
+    let user_id = req.params.user_id;
+    try {
+      let merchant = await merchantService.getMerchantByUser(user_id);
+
+      return res.status(200).json({ status: "ok", data: merchant });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.post(
   "/register",
   checkToken,
@@ -113,13 +129,11 @@ router.put(
         uploadImage
       );
 
-      return res
-        .status(200)
-        .json({
-          status: "ok",
-          message: "merchant updated!",
-          data: merchantUpdated
-        });
+      return res.status(200).json({
+        status: "ok",
+        message: "merchant updated!",
+        data: merchantUpdated
+      });
     } catch (error) {
       next(error);
     }

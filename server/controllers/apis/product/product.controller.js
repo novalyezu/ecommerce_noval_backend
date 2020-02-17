@@ -12,7 +12,7 @@ let router = require("express").Router();
 
 router.get("/", async (req, res, next) => {
   let sort_by_harga =
-    req.query.sort_by_harga !== undefined ? req.query.sort_by_harga : "kosong";
+    req.query.sort_by_harga !== "" ? req.query.sort_by_harga : "kosong";
   let start_at =
     req.query.start_at !== undefined ? parseInt(req.query.start_at) : 0;
   let limit = req.query.limit !== undefined ? parseInt(req.query.limit) : 0;
