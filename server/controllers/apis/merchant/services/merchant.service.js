@@ -6,7 +6,9 @@ const uuidv1 = require("uuid/v1");
 const moment = require("moment");
 
 const Merchant = require("../../../../databases/models/Merchant");
+const ShippingService = require("../../../../databases/models/ShippingService");
 const User = require("../../../../databases/models/User");
+const MerchantShippingService = require("../../../../databases/models/MerchantShippingService");
 
 const getMerchant = async merchant_id => {
   let merchant = await Merchant.findByPk(merchant_id);
@@ -142,6 +144,19 @@ const deleteImage = async merchant_id => {
     });
 };
 
+const addShippingService = async (merchant_id, shipping_service_id) => {
+  await MerchantShippingService.create({
+    merchant_id: merchant_id,
+    shipping_service_id: shipping_service_id
+  });
+
+  let merchant_shipping_service = await ShippingService.findByPk(
+    shipping_service_id
+  );
+
+  return merchant_shipping_service;
+};
+
 module.exports = {
   getMerchant: getMerchant,
   getMerchantByUser: getMerchantByUser,
@@ -149,5 +164,6 @@ module.exports = {
   updateMerchant: updateMerchant,
   uploadImage: uploadImage,
   updateImageUrl: updateImageUrl,
-  deleteImage: deleteImage
+  deleteImage: deleteImage,
+  addShippingService: addShippingService
 };

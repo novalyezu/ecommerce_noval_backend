@@ -140,4 +140,25 @@ router.put(
   }
 );
 
+router.post(
+  "/add_shipping_service",
+  checkToken,
+  verifyToken,
+  isMerchant,
+  async (req, res, next) => {
+    let merchant_id = req.body.merchant_id;
+    let shipping_service_id = req.body.shipping_service_id;
+    try {
+      let shipping_service = await merchantService.addShippingService(
+        merchant_id,
+        shipping_service_id
+      );
+
+      return res.status(200).json({ status: "ok", data: shipping_service });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 module.exports = router;
