@@ -15,25 +15,25 @@ let sequelize = new Sequelize(config.dbname, config.dbuser, config.dbpass, {
 });
 
 // PRODUCTION
-// if (process.env.NODE_ENV === "production") {
-//   sequelize = new Sequelize(config.dbname, config.dbuser, config.dbpass, {
-//     host: config.dbhost,
-//     dialect: "mysql",
-//     define: {
-//       timestamps: false,
-//       freezeTableName: true
-//     },
-//     logging: config.dblogging,
-//     dialectOptions: {
-//       socketPath: config.dbhost
-//     },
-//     pool: {
-//       max: 5,
-//       min: 0,
-//       acquire: 30000,
-//       idle: 10000
-//     }
-//   });
-// }
+if (process.env.NODE_ENV === "production") {
+  sequelize = new Sequelize(config.dbname, config.dbuser, config.dbpass, {
+    host: config.dbhost,
+    dialect: "mysql",
+    define: {
+      timestamps: false,
+      freezeTableName: true
+    },
+    logging: config.dblogging,
+    dialectOptions: {
+      socketPath: config.dbhost
+    },
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    }
+  });
+}
 
 module.exports = sequelize;

@@ -1,7 +1,7 @@
 "use strict";
 
 let prodConfig = {
-  hostname: "",
+  hostname: "https://novalcommerce.herokuapp.com/",
   port: process.env.PORT || 3000,
   env: "production",
   dbname: "9qippDy9aM",
